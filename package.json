@@ -1,0 +1,25 @@
+{
+  "name": "fu-kihatsu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "build": "babel src --out-dir build",
+    "electron": "electron .",
+    "start": "npm run build && npm run electron"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://dorayaki_kun@bitbucket.org/dorayaki_kun/fu-kihatsu.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/dorayaki_kun/fu-kihatsu#readme",
+  "devDependencies": {
+    "babel": "^5.8.23"
+  },
+  "dependencies": {
+    "glob": "^5.0.14"
+  }
+}
