@@ -3,157 +3,48 @@
   <head>
     <meta charset="utf-8">
     <title>Fu-Kihatsu</title>
+    <script type="text/javascript" src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
     <style media="screen">
-	* {
-		padding:0;
-		margin:0;
-		box-sizing:border-box;
-	}
-	html, body {
-		width:100%;
-		height:100%;
-	}
-	#header_fixed {
-		width: 100%;
-		height 5%;
-	}
-	#input_text, #view_text {
-		width:100%;
-		height:40%;
-	}
+    * {
+      padding:0;
+      margin:0;
+      box-sizing:border-box;
+    }
+    html, body {
+      width:100%;
+      height:100%;
+    }
+    #header_fixed {
+      width: 100%;
+      height 5%;
+    }
+    #input_text, #view_text {
+      width:100%;
+      height:45%;
+    }
+
+    #view_text {
+      overflow: scroll;
+    }
+
+    #footer_fixed {
+      width: 100%;
+      height 5%;
+    }
     </style>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-   <script type="text/x-mathjax-config">
-     MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] } });
-   </script>
-   <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-    <script type="text/javascript" src="./build/ace.js"></script>
-    <script type="text/javascript" src="./build/mode-tex.js"></script>
-    <script type="text/javascript" src="./build/theme-twilight.js"></script>
-    <script type="text/javascript">
-	var fs = require('fs');
-	var remote = require('remote');
-	var dialog = remote.require('dialog');
-	var browserWindow = remote.require('browser-window');
-
-	var currentPath = '';
-
-	var editor;
-	window.onload = function() {
-		editor = ace.edit('input_text');
-		editor.getSession().setMode('ace/mode/tex');
-		editor.setTheme('ace/theme/twilight');
-
-		editor.on('change', function() {
-			var view = document.getElementById('view_text');
-
-			var txt = editor.getValue();
-			var convertedText = txt.replace(/(?:\r\n|\r|\n)/g, '<br />');
-			view.innerHTML = convertedText;
-
-			MathJax.Hub.Configured();
-			MathJax.Hub.Queue(["Typeset", MathJax.Hub, view])
-		});
-
-		var btnOpen = document.getElementById('btnOpen');
-		btnOpen.addEventListener('click', openLoadFile);
-
-		function openLoadFile() {
-			var win = browserWindow.getFocusedWindow();
-			dialog.showOpenDialog(
-					win,
-					{
-						properties: ['openFile'],
-						filters: [
-						{
-							name: 'Documents',
-							extensions: ['md']
-						}
-						]
-					},
-					function (path) {
-						if (path) {
-							readFile(path[0]);
-						}
-					}
-					);
-		}
-
-		function readFile(path) {
-			currentPath = path;
-			fs.readFile(path, function(e, text) {
-				if (e !== null) {
-					alert('error: ' + e);
-					return;
-				}
-				var footer = document.getElementById('footer_fixed');
-				footer.innerHTML = path;
-				editor.setValue(text.toString(), -1);
-			})
-		}
-
-		var btnSave = document.getElementById('btnSave');
-		btnSave.addEventListener('click', saveFile);
-
-		function saveFile() {
-			var win = browserWindow.getFocusedWindow();
-
-			if (currentPath === '') {
-				saveNewFile();
-				return;
-			}
-			dialog.showMessageBox(win, {
-				title: 'ファイルの上書き保存を行ないます',
-				type: 'info',
-				buttons: ['OK', 'Cancel'],
-				detail: '本当に保存しますか？'
-			},
-			function(response) {
-				if (response === 0) {
-					var data = editor.getValue();
-					writeFile(currentPath, data);
-				}
-			});
-		};
-
-		function writeFile(path, data) {
-			fs.writeFile(path, data, function(e) {
-				if (e !== null) {
-					alert('error: ' + e);
-					return;
-				}
-			});
-		};
-
-		function saveNewFile() {
-			var win = browserWindow.getFocusedWindow();
-			dialog.showSaveDialog(
-					win,
-					{
-						properties: ['openFile'],
-						filters: [
-						{
-							name: 'Documents',
-							extensions: ['md']
-						}
-						]
-					},
-					function (path) {
-						if (path) {
-							var data = editor.getValue();
-							currentPath = path;
-							writeFile(currentPath, data);
-						}
-					}
-					)
-		}
-	};
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] } });
     </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script type="text/javascript" src="external/ace-builds/src-min-noconflict/ace.js"></script>
+    <script type="text/javascript" src="build/index.js"></script>
   </head>
   <body>
     <div id="header_fixed">
-	<button type="button" id="btnOpen">OPEN</button>
-    	<button type="button" id="btnSave">SAVE</button>
+      <paper-button type="button" id="btnOpen" raised>OPEN</paper-button>
+      <paper-button type="button" id="btnSave" raised>SAVE</paper-button>
     </div>
     <div id="input_text"></div>
     <div id="view_text"></div>
