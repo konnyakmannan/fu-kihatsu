@@ -1,4 +1,3 @@
-build/index.js
-build/lib/fileUtil.js
+build
 node_modules
 bower_components
