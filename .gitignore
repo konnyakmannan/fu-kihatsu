@@ -1,2 +1,4 @@
-build
+build/index.js
+build/lib/fileUtil.js
 node_modules
+bower_components
