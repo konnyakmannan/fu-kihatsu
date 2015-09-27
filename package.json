@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src --out-dir build",
     "electron": "electron .",
-    "start": "npm run build && npm run electron"
+    "start": "npm run build && npm run electron",
+    "publish": "electron-packager . fu-kihatsu --platform=darwin --arch=x64 --version=0.33.3 --icon=./resource/image/icon/gomaabura.icns --out=$HOME/Downloads"
   },
   "repository": {
     "type": "git",
@@ -17,9 +18,12 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/dorayaki_kun/fu-kihatsu#readme",
   "devDependencies": {
-    "babel": "^5.8.23"
+    "babel": "^5.8.23",
+    "electron-prebuilt": "^0.33.3"
   },
   "dependencies": {
-    "glob": "^5.0.14"
+    "highlight.js": "^8.8.0",
+    "marked": "^0.3.5",
+    "path": "^0.12.7"
   }
 }

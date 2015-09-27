@@ -1,4 +1,5 @@
 var app = require('app');
+var path = require('path');
 var BrowserWindow = require('browser-window');
 
 require('crash-reporter').start();
@@ -9,6 +10,7 @@ app.on('window-all-closed', function() { app.quit(); });
 
 app.on('ready', function() {
   mainWindow = new BrowserWindow({
+                    icon: path.join(__dirname, 'resouce', 'image', 'icon', 'gomaabura.png'),
                     width: 800,
                     height: 600
                   });

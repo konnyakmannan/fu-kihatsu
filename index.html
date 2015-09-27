@@ -2,10 +2,17 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
     <title>Fu-Kihatsu</title>
     <script type="text/javascript" src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
     <link rel="import" href="bower_components/paper-button/paper-button.html">
-    <style media="screen">
+    <link rel="import" href="bower_components/paper-item/paper-icon-item.html">
+
+    <link rel="stylesheet" href="bower_components/github-markdown-css/github-markdown.css">
+    <link rel="stylesheet" href="node_modules/highlight.js/styles/github.css">
+    <style>
     * {
       padding:0;
       margin:0;
@@ -31,6 +38,39 @@
     #footer_fixed {
       width: 100%;
       height 5%;
+    }
+    </style>
+    <style is="custom-style">
+    .list {
+      padding-top: 12px;
+      background-color: white;
+      display: inline-block;
+      width: 80%;
+      height: auto;
+      margin: 8px;
+      @apply(--shadow-elevation-2dp);
+    }
+
+    .short {
+      padding-top: 12px;
+      height: 216px;
+    }
+
+    h4 {
+      margin-left: 24px;
+    }
+
+    .avatar {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #ccc;
+    }
+
+    .blue {
+      background-color: var(--paper-light-blue-300);
     }
     </style>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>

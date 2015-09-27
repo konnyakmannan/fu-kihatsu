@@ -20,6 +20,8 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.1.0",
-    "paper-button": "PolymerElements/paper-button#~1.0.6"
+    "paper-button": "PolymerElements/paper-button#~1.0.6",
+    "paper-item": "PolymerElements/paper-item#~1.0.3",
+    "github-markdown-css": "~2.0.10"
   }
 }

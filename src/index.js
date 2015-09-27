@@ -1,5 +1,7 @@
 import fs from 'fs';
 import remote from 'remote';
+import marked from 'marked';
+import { highlight } from 'highlight.js';
 
 const dialog = remote.require('dialog');
 const browserWindow = remote.require('browser-window');
@@ -11,12 +13,50 @@ window.onload = () => {
   editor.getSession().setMode('ace/mode/markdown');
   editor.setTheme('ace/theme/twilight');
 
+  const renderer = new marked.Renderer();
+
+  renderer.list = (body, ordered) => {
+    return `<div class="list" role="list>">${body}</div>\n`;
+  };
+
+  renderer.listitem = (text) => {
+    const listitem = '<paper-icon-item>\n' +
+                        '  <div class="avatar blue" item-icon></div>\n' +
+                        `  <div class="flex">${text}</div>\n` +
+                      '</paper-icon-item>\n';
+
+    return listitem;
+  };
+
+  marked.setOptions({
+    renderer: renderer,
+    gfm: true,
+    tables: true,
+    break: false,
+    pedantic: false,
+    sanitize: true,
+    smartLists: false,
+    smartypants: false,
+    highlight: (code, lang) => {
+      if (lang === null && lang === undefined) return code;
+
+      try {
+        return highlight(lang, code).value;
+      } catch (e) {
+        console.error(e);
+        return code;
+      }
+
+    }
+  });
+
   editor.on('change', () => {
     const view = document.getElementById('view_text');
 
     const txt = editor.getValue();
-    const convertedText = txt.replace(/(?:\r\n|\r|\n)/g, '<br />');
-    view.innerHTML = convertedText;
+    // const convertedText = txt.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
+    view.innerHTML = marked(txt);
 
     MathJax.Hub.Configured();
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, view])
